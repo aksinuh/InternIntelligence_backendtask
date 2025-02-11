@@ -18,10 +18,14 @@ class LoginSerializer(serializers.Serializer):
         email = data.get('email')
         password = data.get('password')
         
+        if not username and not email:
+            raise serializers.ValidationError("İstifadəçi adı və ya email daxil edilməlidir.")
+        
         if not password:
             raise serializers.ValidationError("Password is required.")
         
-        username = None
+        user = None
+        
         if username:
             user = authenticate(username=username, password=password)
         elif email:
@@ -39,21 +43,22 @@ class LoginSerializer(serializers.Serializer):
         return{
             'username': user.username,
             'email': user.email,
-            'refresh': str(refresh),
             'access': str(refresh.access_token),
+            'refresh': str(refresh),
+            
         }
         
 
-class LogoutSerializer(serializers.Serializer):
-    refresh = serializers.CharField()
+# class LogoutSerializer(serializers.Serializer):
+#     refresh = serializers.CharField()
     
-    def validate(self, data):
-        refresh_token= data.get('refresh')
+#     def validate(self, data):
+#         refresh_token= data.get('refresh')
         
-        try:
-            token = RefreshToken(refresh_token)
-            token.blacklist()
-        except Exception as e:
-            raise serializers.ValidationError("Invalid or expired refresh token.")
+#         try:
+#             token = RefreshToken(refresh_token)
+#             token.blacklist()
+#         except Exception as e:
+#             raise serializers.ValidationError("Invalid or expired refresh token.")
         
-        return data
+#         return data
