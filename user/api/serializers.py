@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.serializers import ModelSerializer
 from django.utils import timezone
+from user.models import Project, Skill, Achievement, Contact
 
 User = get_user_model()
 
@@ -47,18 +48,86 @@ class LoginSerializer(serializers.Serializer):
             'refresh': str(refresh),
             
         }
+ 
+ 
+        
+class ProjectSerializer(serializers.Serializer):
+    class Meta:
+        model = Project
+        fields = {
+            'id',
+            'title',
+            'description',
+            'start_data',
+            'end_data',
+            'image',
+            'link',
+            'created_at',
+            'updated_at'
+        }
+
+
+class ProjectCreateSerializer(serializers.Serializer):
+    class Meta:
+        model = Project
+        fields = {
+            'title',
+            'description',
+            'start_data',
+            'end_data',
+            'image',
+            'link'
+        }
         
 
-# class LogoutSerializer(serializers.Serializer):
-#     refresh = serializers.CharField()
-    
-#     def validate(self, data):
-#         refresh_token= data.get('refresh')
+class SkillSerializer(serializers.Serializer):
+    class Meta:
+        model = Skill
+        fields = {
+            'name',
+            'proficiency_level',
+            'created_at',
+            'updated_at'
+        }
         
-#         try:
-#             token = RefreshToken(refresh_token)
-#             token.blacklist()
-#         except Exception as e:
-#             raise serializers.ValidationError("Invalid or expired refresh token.")
         
-#         return data
+class SkillCreateSerializer(serializers.Serializer):
+    class Meta:
+        model = Skill
+        fields = {
+            'name',
+            'proficiency_level'
+        }        
+
+
+class AchievementSerializer(serializers.Serializer):
+    class Meta:
+        model = Achievement
+        fields = {
+            'title',
+            'description',
+            'date_achieved',
+            'created_at',
+            'updated_at',
+        }        
+
+
+class AchievementcreateSerializer(serializers.Serializer):
+    class Meta:
+        model = Achievement
+        fields = {
+            'title',
+            'description',
+            'date_achieved',
+        }
+
+
+class contactSerializer(serializers.Serializer):
+    class meta:
+        model = Contact
+        fields = {
+            'name',
+            'email',
+            'message',
+            
+        }

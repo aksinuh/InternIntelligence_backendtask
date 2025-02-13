@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
-from .serializers import LoginSerializer
+from .serializers import LoginSerializer, ProjectSerializer, ProjectCreateSerializer, SkillSerializer, SkillCreateSerializer, AchievementSerializer
 
 
 class LoginView(GenericAPIView):
@@ -31,3 +31,5 @@ class LogoutView(APIView):
 
         except Exception as e:
             return Response({"error": "Invalid refresh token."}, status=status.HTTP_400_BAD_REQUEST)
+        
+    
