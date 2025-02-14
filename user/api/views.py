@@ -1,10 +1,16 @@
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.permissions import IsAuthenticated
-from .serializers import LoginSerializer, ProjectSerializer, ProjectCreateSerializer, SkillSerializer, SkillCreateSerializer, AchievementSerializer
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from user.models import Project, Skill, Achievement, Contact
+from .serializers import (
+    LoginSerializer, ProjectSerializer,
+    ProjectCreateSerializer, SkillSerializer,
+    SkillCreateSerializer, AchievementSerializer,
+    AchievementcreateSerializer, ContactSerializer
+)
 
 
 class LoginView(GenericAPIView):
@@ -32,4 +38,73 @@ class LogoutView(APIView):
         except Exception as e:
             return Response({"error": "Invalid refresh token."}, status=status.HTTP_400_BAD_REQUEST)
         
+
+class ProjectListCreateAPIView(ListCreateAPIView):
+    serializer_class = ProjectCreateSerializer
+    permission_classes = [AllowAny]
+    queryset = Project.objects.all()
+    
+    def get_serializer_class(self):
+        if  self.request.method == "GET":
+            return ProjectSerializer
+        return super().get_serializer_class()
+    
+
+class ProjectRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = ProjectCreateSerializer
+    permission_classes = [AllowAny]
+    queryset = Project.objects.all()
+    
+    def get_serializer_class(self):
+        if  self.request.method == "GET":
+            return ProjectSerializer
+        return super().get_serializer_class()
+    
+    
+class SkillListCreateAPIView(ListCreateAPIView):
+    serializer_class = SkillCreateSerializer
+    permission_classes = [AllowAny]
+    queryset = Skill.objects.all()
+    
+    def get_serializer_class(self):
+        if  self.request.method == "GET":
+            return SkillSerializer
+        return super().get_serializer_class()
+    
+
+class SkillRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = SkillCreateSerializer
+    permission_classes = [AllowAny]
+    queryset = Skill.objects.all()
+    
+    def get_serializer_class(self):
+        if  self.request.method == "GET":
+            return SkillSerializer
+        return super().get_serializer_class()
+    
+    
+class AchievementListCreateAPIView(ListCreateAPIView):
+    serializer_class = AchievementcreateSerializer
+    permission_classes = [AllowAny]
+    queryset = Achievement.objects.all()
+    
+    def get_serializer_class(self):
+        if  self.request.method == "GET":
+            return AchievementSerializer
+        return super().get_serializer_class()
+    
+
+class AchievementRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = AchievementcreateSerializer
+    permission_classes = [AllowAny]
+    queryset = Achievement.objects.all()
+    
+    def get_serializer_class(self):
+        if  self.request.method == "GET":
+            return AchievementSerializer
+        return super().get_serializer_class()
+    
+class ContactCreateAPIView(CreateAPIView):
+    serializer_class = ContactSerializer
+    permission_classes = [AllowAny]
     

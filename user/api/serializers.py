@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.serializers import ModelSerializer
 from django.utils import timezone
-from user.models import Project, Skill, Achievement, Contact
+from user.models import Project, Skill, Achievement, Contact, Level
 
 User = get_user_model()
 
@@ -51,10 +51,10 @@ class LoginSerializer(serializers.Serializer):
  
  
         
-class ProjectSerializer(serializers.Serializer):
+class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = {
+        fields = (
             'id',
             'title',
             'description',
@@ -64,70 +64,74 @@ class ProjectSerializer(serializers.Serializer):
             'link',
             'created_at',
             'updated_at'
-        }
+        )
 
 
-class ProjectCreateSerializer(serializers.Serializer):
+class ProjectCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = {
+        fields = (
             'title',
             'description',
             'start_data',
             'end_data',
             'image',
             'link'
-        }
+        )
         
 
-class SkillSerializer(serializers.Serializer):
+class SkillSerializer(serializers.ModelSerializer):
+    proficiency_level = serializers.CharField(source='proficiency_level.name' )
     class Meta:
         model = Skill
-        fields = {
+        fields = (
+            'id',
             'name',
             'proficiency_level',
             'created_at',
             'updated_at'
-        }
+        )
         
         
-class SkillCreateSerializer(serializers.Serializer):
+class SkillCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
-        fields = {
+        fields = (
             'name',
             'proficiency_level'
-        }        
+        )     
 
 
-class AchievementSerializer(serializers.Serializer):
+class AchievementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Achievement
-        fields = {
+        fields = (
+            'id',
             'title',
             'description',
             'date_achieved',
             'created_at',
             'updated_at',
-        }        
+        )       
 
 
-class AchievementcreateSerializer(serializers.Serializer):
+class AchievementcreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Achievement
-        fields = {
+        fields = (
             'title',
             'description',
             'date_achieved',
-        }
+        )
 
 
-class contactSerializer(serializers.Serializer):
-    class meta:
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
         model = Contact
-        fields = {
+        fields = (
             'name',
             'email',
             'message',
             
-        }
+        )
+        

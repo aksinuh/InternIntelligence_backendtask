@@ -6,6 +6,9 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     email = models.EmailField(unique=True)
     
+    def get_full_name(self):
+        return super().get_full_name()
+    
     
 class Project(models.Model):
     title = models.CharField(max_length=100)
