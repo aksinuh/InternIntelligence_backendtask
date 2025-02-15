@@ -2,8 +2,6 @@ from rest_framework import serializers
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.serializers import ModelSerializer
-from django.utils import timezone
 from user.models import Project, Skill, Achievement, Contact, Level
 
 User = get_user_model()
