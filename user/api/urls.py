@@ -3,11 +3,13 @@ from .views import (
     LoginView, LogoutView, ProjectListCreateAPIView,
     ProjectRetrieveUpdateDestroyAPIView,SkillListCreateAPIView,
     SkillRetrieveUpdateDestroyAPIView, AchievementListCreateAPIView,
-    AchievementRetrieveUpdateDestroyAPIView, ContactCreateAPIView
+    AchievementRetrieveUpdateDestroyAPIView, ContactCreateAPIView,
+    UserRegistrationView
 )
 
 
 urlpatterns = [
+    path('register/', UserRegistrationView.as_view(), name='user-register'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/',LogoutView.as_view(), name='logout'),
     path('project/', ProjectListCreateAPIView.as_view(), name="Project_ListCreate"),

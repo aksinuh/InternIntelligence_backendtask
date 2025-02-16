@@ -48,6 +48,7 @@ class MovieCreateSerializer(serializers.ModelSerializer):
         
 
 class MovieDetailSerializer(serializers.ModelSerializer):
+    movie = serializers.CharField(source="movie.title")
     class Meta:
         model = MovieDetail
         fields = (
@@ -76,6 +77,8 @@ class MovieDetailCreateSerializer(serializers.ModelSerializer):
         )
         
 class RatingSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source="user.username")
+    movie = serializers.CharField(source="movie.title")
     class Meta:
         model = Rating
         fields = (
@@ -96,28 +99,11 @@ class RatingCreateSerializer(serializers.ModelSerializer):
             'score',
             'comment',
         )
-class SearchHistorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SearchHistory
-        fields = (
-            'id',
-            'user',
-            'search_term',
-            'searched_at',
-        )
-        
-        
-class SearchHistoryCreateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SearchHistory
-        fields = (
-            'user',
-            'search_term',
-            'searched_at',
-        )
         
         
 class WatchlistSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source="user.username")
+    movie = serializers.CharField(source="movie.title")
     class Meta:
         model = Watchlist
         fields = (
